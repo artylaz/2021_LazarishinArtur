@@ -1,21 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "D:\\YandexDisk\\УЧЕБНАЯ РАБОТА\\3бак МиСПИСиТ\\ДР\\2021\\Лазаришин Артур\\2021_LazarishinArtur\\2021_LazarishinArtur\\2021_LazarishinArtur.csproj": {}
+    "C:\\Users\\arty-\\Source\\Repos\\2021_LazarishinArtur\\2021_LazarishinArtur\\2021_LazarishinArtur.csproj": {}
   },
   "projects": {
-    "D:\\YandexDisk\\УЧЕБНАЯ РАБОТА\\3бак МиСПИСиТ\\ДР\\2021\\Лазаришин Артур\\2021_LazarishinArtur\\2021_LazarishinArtur\\2021_LazarishinArtur.csproj": {
+    "C:\\Users\\arty-\\Source\\Repos\\2021_LazarishinArtur\\2021_LazarishinArtur\\2021_LazarishinArtur.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\YandexDisk\\УЧЕБНАЯ РАБОТА\\3бак МиСПИСиТ\\ДР\\2021\\Лазаришин Артур\\2021_LazarishinArtur\\2021_LazarishinArtur\\2021_LazarishinArtur.csproj",
+        "projectUniqueName": "C:\\Users\\arty-\\Source\\Repos\\2021_LazarishinArtur\\2021_LazarishinArtur\\2021_LazarishinArtur.csproj",
         "projectName": "2021_LazarishinArtur",
-        "projectPath": "D:\\YandexDisk\\УЧЕБНАЯ РАБОТА\\3бак МиСПИСиТ\\ДР\\2021\\Лазаришин Артур\\2021_LazarishinArtur\\2021_LazarishinArtur\\2021_LazarishinArtur.csproj",
-        "packagesPath": "C:\\Users\\lavro\\.nuget\\packages\\",
-        "outputPath": "D:\\YandexDisk\\УЧЕБНАЯ РАБОТА\\3бак МиСПИСиТ\\ДР\\2021\\Лазаришин Артур\\2021_LazarishinArtur\\2021_LazarishinArtur\\obj\\",
+        "projectPath": "C:\\Users\\arty-\\Source\\Repos\\2021_LazarishinArtur\\2021_LazarishinArtur\\2021_LazarishinArtur.csproj",
+        "packagesPath": "C:\\Users\\arty-\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\arty-\\Source\\Repos\\2021_LazarishinArtur\\2021_LazarishinArtur\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
-          "C:\\Users\\lavro\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\arty-\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
