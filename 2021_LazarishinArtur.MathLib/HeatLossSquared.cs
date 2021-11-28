@@ -1,79 +1,27 @@
-﻿using System;
+﻿using _2021_LazarishinArtur.MathLib.Base;
+using System;
 
 namespace _2021_LazarishinArtur.MathLib
 {
-    public class HeatLossSquared
+    public class HeatLossSquared : HeatLossBase
     {
         #region Исходные данные	
 
-        /// <summary>
-        /// Коэффициент излучения абсолютно черного тела (С0), Вт/(м^2 * K)
-        /// </summary>
-        private const double BLACKBODY_EMISSIVITY = 5.7;
-
-        private double? tempBake;
-        private double? sideLength;
-        private double? wallThickness;
-        private double? windowOpenTime;
-
-        /// <summary>
-        /// Температура в печи (tпеч), °С
-        /// </summary>
-        public double? TempBake
-        {
-            get
-            {
-                if (tempBake == null)
-                    throw new ArgumentException("Значение не указано", nameof(TempBake));
-
-                return tempBake;
-            }
-            set => tempBake = value;
-        }
+        private double sideLength;
 
         /// <summary>
         /// Высота окна (H), м
         /// </summary>
-        public double? SideLength
+        public double SideLength
         {
-            get
+            get => sideLength;
+            set
             {
-                if (sideLength == null)
-                    throw new ArgumentException("Значение не указано", nameof(SideLength));
+                if (value < 0 || value >= 5)
+                    throw new ArgumentException("Значение должно быть больше 0 и не более 5 метров", nameof(SideLength));
 
-                return sideLength;
+                sideLength = value;
             }
-            set => sideLength = value;
-        }
-
-        /// <summary>
-        /// Толщина стенки (S), м
-        /// </summary>
-        public double? WallThickness
-        {
-            get
-            {
-                if (wallThickness == null)
-                    throw new ArgumentException("Значение не указано", nameof(WallThickness));
-
-                return wallThickness;
-            }
-            set => wallThickness = value;
-        }
-
-        /// <summary>
-        /// Время открытия окна (τ), с
-        /// </summary>
-        public double? WindowOpenTime
-        {
-            get
-            {
-                if (windowOpenTime == null)
-                    throw new ArgumentException("Значение не указано", nameof(WindowOpenTime));
-
-                return windowOpenTime;
-            }
-            set => windowOpenTime = value;
         }
 
         #endregion
@@ -83,23 +31,48 @@ namespace _2021_LazarishinArtur.MathLib
         /// <summary>
         /// Площадь излучающего отверстия (F), м^2
         /// </summary>
-        public double? RadiatingHoleArea { get => Math.Round((double)(SideLength * SideLength), 2); }
+        public double RadiatingHoleArea
+        {
+            get
+            {
+                if (SideLength == 0)
+                    throw new ArgumentException("Значение SideLength должно быть больше 0", nameof(RadiatingHoleArea));
+
+                return Math.Round((SideLength * SideLength), 2);
+            }
+        }
 
         /// <summary>
         /// Отношение высоты к толщине стенки (H/S), -
         /// </summary>
-        public double? HeightToWallThicknessRatio { get => Math.Round((double)(SideLength / WallThickness), 2); }
-
-        /// <summary>
-        /// Отношение ширины к высоте (B/H), -
-        /// </summary>
-        public double? WidthToHeightRatio
+        public double HeightToWallThicknessRatio
         {
             get
             {
-                double widthToHeightRatio = Math.Round((double)(SideLength / SideLength), 2);
+                if (WallThickness == 0 || SideLength == 0)
+                    throw new ArgumentException("Значения WallThickness, SideLength должны быть больше 0", nameof(HeightToWallThicknessRatio));
 
-                if (widthToHeightRatio < 1 || widthToHeightRatio > 10)
+                var heightToWallThicknessRatio = Math.Round((SideLength / WallThickness), 2);
+
+                if (heightToWallThicknessRatio < 0 || heightToWallThicknessRatio >= 5)
+                    throw new ArgumentException("Значение не может быть таким", nameof(HeightToWallThicknessRatio));
+
+                return heightToWallThicknessRatio;
+            }
+        }
+        /// <summary>
+        /// Отношение ширины к высоте (B/H), -
+        /// </summary>
+        public double WidthToHeightRatio
+        {
+            get
+            {
+                if (SideLength == 0)
+                    throw new ArgumentException("Значение SideLength должно быть больше 0", nameof(WidthToHeightRatio));
+
+                double widthToHeightRatio = Math.Round((SideLength / SideLength), 2);
+
+                if (widthToHeightRatio > 1 || widthToHeightRatio < 1)
                     throw new ArgumentException("Значение не может быть таким", nameof(WidthToHeightRatio));
 
                 return widthToHeightRatio;
@@ -110,33 +83,23 @@ namespace _2021_LazarishinArtur.MathLib
         /// <summary>
         /// Угловой коэффициент (φ), -
         /// </summary>
-        public double? AngularCoefficient
+        public double AngularCoefficient
         {
-            get
-            {
-                return Math.Round(0.0034 * Math.Pow((double)HeightToWallThicknessRatio, 4) - 0.0358 * Math.Pow((double)HeightToWallThicknessRatio, 3) + 0.0969 * Math.Pow((double)HeightToWallThicknessRatio, 2) + 0.1253 * (double)HeightToWallThicknessRatio, 3);
-            }
+            get => Math.Round(0.0034 * Math.Pow(HeightToWallThicknessRatio, 4) - 0.0358 * Math.Pow(HeightToWallThicknessRatio, 3) + 0.0969 * Math.Pow(HeightToWallThicknessRatio, 2) + 0.1253 * HeightToWallThicknessRatio, 3);
         }
 
         #endregion
 
         #region Расчет результатов
-        /// <summary>
-        /// Метод по расчёту коэффициента диафрагмирования
-        /// </summary>
-        /// <returns>Коэффициент диафрагмирования(Φ), -</returns>
-        public double GetApertureRatio()
+
+        public override double GetApertureRatio()
         {
-            return Math.Round(((1 + (double)AngularCoefficient) / 2) - Math.Pow((double)((1 - AngularCoefficient) / 6), 4), 4);
+            return Math.Round(((1 + AngularCoefficient) / 2) - Math.Pow(((1 - AngularCoefficient) / 6), 4), 4);
         }
 
-        /// <summary>
-        /// Метод по расчёту тепловых потерь излучением
-        /// </summary>
-        /// <returns>Потери теплоты излучения (Qл), Дж</returns>
-        public double GetRadiationHeatLoss()
+        public override double GetRadiationHeatLoss()
         {
-            return Math.Round(BLACKBODY_EMISSIVITY * Math.Pow((((double)TempBake + 273) / 100), 4) * (double)RadiatingHoleArea * GetApertureRatio() * (double)WindowOpenTime, 2);
+            return Math.Round(BLACKBODY_EMISSIVITY * Math.Pow(((TempBake + 273) / 100), 4) * RadiatingHoleArea * GetApertureRatio() * WindowOpenTime, 2);
         }
 
         #endregion

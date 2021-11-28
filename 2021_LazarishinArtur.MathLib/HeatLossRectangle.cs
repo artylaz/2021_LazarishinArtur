@@ -1,96 +1,44 @@
-﻿using System;
+﻿using _2021_LazarishinArtur.MathLib.Base;
+using System;
 using System.Collections.Generic;
 
 namespace _2021_LazarishinArtur.MathLib
 {
-    public class HeatLossRectangle
+    public class HeatLossRectangle : HeatLossBase
     {
         #region Исходные данные	
 
-        /// <summary>
-        /// Коэффициент излучения абсолютно черного тела (С0), Вт/(м^2 * K)
-        /// </summary>
-        private const double BLACKBODY_EMISSIVITY = 5.7;
-
-        private double? tempBake;
-        private double? widthWindow;
-        private double? heightWindow;
-        private double? wallThickness;
-        private double? windowOpenTime;
-
-        /// <summary>
-        /// Температура в печи (tпеч), °С
-        /// </summary>
-        public double? TempBake
-        {
-            get
-            {
-                if (tempBake == null)
-                    throw new ArgumentException("Значение не указано", nameof(TempBake));
-
-                return tempBake;
-            }
-            set => tempBake = value;
-        }
+        private double widthWindow;
+        private double heightWindow;
 
         /// <summary>
         /// Ширина окна (B), м
         /// </summary>
-        public double? WidthWindow
+        public double WidthWindow
         {
-            get
+            get => widthWindow;
+            set
             {
-                if (widthWindow == null)
-                    throw new ArgumentException("Значение не указано", nameof(WidthWindow));
+                if (value < 0 || value >= 5)
+                    throw new ArgumentException("Значение должно быть больше 0 и не более 5 метров", nameof(WidthWindow));
 
-                return widthWindow;
+                widthWindow = value;
             }
-            set => widthWindow = value;
         }
 
         /// <summary>
         /// Высота окна (H), м
         /// </summary>
-        public double? HeightWindow
+        public double HeightWindow
         {
-            get
+            get => heightWindow;
+            set
             {
-                if (heightWindow == null)
-                    throw new ArgumentException("Значение не указано", nameof(HeightWindow));
+                if (value < 0 || value >= 5)
+                    throw new ArgumentException("Значение должно быть больше 0 и не более 5 метров", nameof(HeightWindow));
 
-                return heightWindow;
+                heightWindow = value;
             }
-            set => heightWindow = value;
-        }
-
-        /// <summary>
-        /// Толщина стенки (S), м
-        /// </summary>
-        public double? WallThickness
-        {
-            get
-            {
-                if (wallThickness == null)
-                    throw new ArgumentException("Значение не указано", nameof(WallThickness));
-
-                return wallThickness;
-            }
-            set => wallThickness = value;
-        }
-
-        /// <summary>
-        /// Время открытия окна (τ), с
-        /// </summary>
-        public double? WindowOpenTime
-        {
-            get
-            {
-                if (windowOpenTime == null)
-                    throw new ArgumentException("Значение не указано", nameof(WindowOpenTime));
-
-                return windowOpenTime;
-            }
-            set => windowOpenTime = value;
         }
 
         #endregion
@@ -100,21 +48,47 @@ namespace _2021_LazarishinArtur.MathLib
         /// <summary>
         /// Площадь излучающего отверстия (F), м^2
         /// </summary>
-        public double? RadiatingHoleArea { get => Math.Round((double)(WidthWindow * HeightWindow), 2); }
+        public double RadiatingHoleArea
+        {
+            get
+            {
+                if (WidthWindow == 0 || HeightWindow == 0)
+                    throw new ArgumentException("Значения WidthWindow, HeightWindow должны быть больше 0", nameof(RadiatingHoleArea));
+
+                return Math.Round((WidthWindow * HeightWindow), 2);
+            }
+        }
 
         /// <summary>
         /// Отношение высоты к толщине стенки (H/S), -
         /// </summary>
-        public double? HeightToWallThicknessRatio { get => Math.Round((double)(HeightWindow / WallThickness), 2); }
+        public double HeightToWallThicknessRatio
+        {
+            get
+            {
+                if (WallThickness == 0 || HeightWindow == 0)
+                    throw new ArgumentException("Значения WallThickness, HeightWindow должны быть больше 0", nameof(HeightToWallThicknessRatio));
+
+                var heightToWallThicknessRatio = Math.Round((HeightWindow / WallThickness), 2);
+
+                if (heightToWallThicknessRatio < 0 || heightToWallThicknessRatio >= 5)
+                    throw new ArgumentException("Значение не может быть таким", nameof(HeightToWallThicknessRatio));
+
+                return heightToWallThicknessRatio;
+            }
+        }
 
         /// <summary>
         /// Отношение ширины к высоте (B/H), -
         /// </summary>
-        public double? WidthToHeightRatio
+        public double WidthToHeightRatio
         {
             get
             {
-                double widthToHeightRatio = Math.Round((double)(WidthWindow / HeightWindow), 2);
+                if (WidthWindow == 0 || HeightWindow == 0)
+                    throw new ArgumentException("Значения WidthWindow, HeightWindow должны быть больше 0", nameof(WidthToHeightRatio));
+
+                double widthToHeightRatio = Math.Round((WidthWindow / HeightWindow), 2);
 
                 if (widthToHeightRatio < 1 || widthToHeightRatio > 10)
                     throw new ArgumentException("Значение не может быть таким", nameof(WidthToHeightRatio));
@@ -126,13 +100,7 @@ namespace _2021_LazarishinArtur.MathLib
         /// <summary>
         /// Угловой коэффициент (φ), -
         /// </summary>
-        public double? AngularCoefficient
-        {
-            get
-            {
-                return Interpolation(WidthToHeightRatio, GetAngularCoefficients());
-            }
-        }
+        public double AngularCoefficient { get => Interpolation(WidthToHeightRatio, GetAngularCoefficients()); }
 
         #endregion
 
@@ -146,12 +114,12 @@ namespace _2021_LazarishinArtur.MathLib
         {
             return new Dictionary<double, double>
             {
-                { 1, Math.Round(0.0034 * Math.Pow((double)HeightToWallThicknessRatio,4) - 0.0358 * Math.Pow((double)HeightToWallThicknessRatio,3) + 0.0969 * Math.Pow((double)HeightToWallThicknessRatio,2) + 0.1253 * (double)HeightToWallThicknessRatio, 3) },
-                { 1.4, Math.Round(0.0028 * Math.Pow((double)HeightToWallThicknessRatio,4) - 0.0262 * Math.Pow((double)HeightToWallThicknessRatio,3) + 0.0454 * Math.Pow((double)HeightToWallThicknessRatio,2) + 0.2259 * (double)HeightToWallThicknessRatio, 3) },
-                { 2, Math.Round(-0.0014 * Math.Pow((double)HeightToWallThicknessRatio,5) + 0.019 * Math.Pow((double)HeightToWallThicknessRatio,4) - 0.0876 * Math.Pow((double)HeightToWallThicknessRatio,3) + 0.1224 * Math.Pow((double)HeightToWallThicknessRatio, 2) + 0.2328 * (double)HeightToWallThicknessRatio, 3) },
-                { 3, Math.Round(0.0027 * Math.Pow((double)HeightToWallThicknessRatio,4) - 0.0248 * Math.Pow((double)HeightToWallThicknessRatio,3) + 0.0268 * Math.Pow((double)HeightToWallThicknessRatio,2) + 0.3 * (double)HeightToWallThicknessRatio, 3) },
-                { 5, Math.Round(0.0054 * Math.Pow((double)HeightToWallThicknessRatio,3) - 0.0806 * Math.Pow((double)HeightToWallThicknessRatio,2) + 0.4252 * (double)HeightToWallThicknessRatio, 3) },
-                { 10, Math.Round(0.0088 * Math.Pow((double)HeightToWallThicknessRatio,3) - 0.108 * Math.Pow((double)HeightToWallThicknessRatio,2) + 0.4819 * (double)HeightToWallThicknessRatio, 3) }
+                { 1, Math.Round(0.0034 * Math.Pow(HeightToWallThicknessRatio,4) - 0.0358 * Math.Pow(HeightToWallThicknessRatio,3) + 0.0969 * Math.Pow(HeightToWallThicknessRatio,2) + 0.1253 * HeightToWallThicknessRatio, 3) },
+                { 1.4, Math.Round(0.0028 * Math.Pow(HeightToWallThicknessRatio,4) - 0.0262 * Math.Pow(HeightToWallThicknessRatio,3) + 0.0454 * Math.Pow(HeightToWallThicknessRatio,2) + 0.2259 * HeightToWallThicknessRatio, 3) },
+                { 2, Math.Round(-0.0014 * Math.Pow(HeightToWallThicknessRatio,5) + 0.019 * Math.Pow(HeightToWallThicknessRatio,4) - 0.0876 * Math.Pow(HeightToWallThicknessRatio,3) + 0.1224 * Math.Pow(HeightToWallThicknessRatio, 2) + 0.2328 * (double)HeightToWallThicknessRatio, 3) },
+                { 3, Math.Round(0.0027 * Math.Pow(HeightToWallThicknessRatio,4) - 0.0248 * Math.Pow(HeightToWallThicknessRatio,3) + 0.0268 * Math.Pow(HeightToWallThicknessRatio,2) + 0.3 * HeightToWallThicknessRatio, 3) },
+                { 5, Math.Round(0.0054 * Math.Pow(HeightToWallThicknessRatio,3) - 0.0806 * Math.Pow(HeightToWallThicknessRatio,2) + 0.4252 * HeightToWallThicknessRatio, 3) },
+                { 10, Math.Round(0.0088 * Math.Pow(HeightToWallThicknessRatio,3) - 0.108 * Math.Pow(HeightToWallThicknessRatio,2) + 0.4819 * HeightToWallThicknessRatio, 3) }
             };
         }
 
@@ -161,12 +129,12 @@ namespace _2021_LazarishinArtur.MathLib
         /// <param name="widthToHeightRatio">Отношение ширины к высоте окна (B/H), -</param>
         /// <param name="angularCoefficients">Словарь, где ключ - это отношение ширины к высоте окна, а значение - это угловой коэффициент</param>
         /// <returns>Угловой коэффициент (φ), -</returns>
-        private double? Interpolation(double? widthToHeightRatio, Dictionary<double, double> angularCoefficients)
+        private double Interpolation(double widthToHeightRatio, Dictionary<double, double> angularCoefficients)
         {
-            double? x1 = null;
-            double? x2 = null;
-            double? y1 = null;
-            double? y2 = null;
+            double x1 = 0;
+            double x2 = 0;
+            double y1 = 0;
+            double y2 = 0;
 
             foreach (var item in angularCoefficients)
             {
@@ -188,31 +156,23 @@ namespace _2021_LazarishinArtur.MathLib
             }
 
 
-            if (x1 != null && x2 != null && y1 != null && y2 != null)
-                return Math.Round((double)(y1 + ((widthToHeightRatio - x1) / (x2 - x1) * (y2 - y1))), 3);
+            if (x1 != 0 && x2 != 0 && y1 != 0 && y2 != 0)
+                return Math.Round((y1 + ((widthToHeightRatio - x1) / (x2 - x1) * (y2 - y1))), 3);
             else
-                return null;
+                return 0;
         }
         #endregion
 
         #region Расчет результатов
 
-        /// <summary>
-        /// Метод по расчёту коэффициента диафрагмирования
-        /// </summary>
-        /// <returns>Коэффициент диафрагмирования(Φ), -</returns>
-        public double GetApertureRatio()
+        public override double GetApertureRatio()
         {
-            return Math.Round(((1 + (double)AngularCoefficient) / 2) - Math.Pow((double)((1 - AngularCoefficient) / 6), 4), 4);
+            return Math.Round(((1 + AngularCoefficient) / 2) - Math.Pow(((1 - AngularCoefficient) / 6), 4), 4);
         }
 
-        /// <summary>
-        /// Метод по расчёту тепловых потерь излучением
-        /// </summary>
-        /// <returns>Потери теплоты излучения (Qл), Дж</returns>
-        public double GetRadiationHeatLoss()
+        public override double GetRadiationHeatLoss()
         {
-            return Math.Round(BLACKBODY_EMISSIVITY * Math.Pow((((double)TempBake + 273) / 100), 4) * (double)RadiatingHoleArea * GetApertureRatio() * (double)WindowOpenTime,2);
+            return Math.Round(BLACKBODY_EMISSIVITY * Math.Pow(((TempBake + 273) / 100), 4) * RadiatingHoleArea * GetApertureRatio() * WindowOpenTime, 2);
         }
 
         #endregion
