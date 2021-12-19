@@ -90,7 +90,7 @@ namespace _2021_LazarishinArtur.MathLib
 
                 double widthToHeightRatio = Math.Round((WidthWindow / HeightWindow), 2);
 
-                if (widthToHeightRatio < 1 || widthToHeightRatio > 10)
+                if (widthToHeightRatio < 0 )
                     throw new ArgumentException("Значение не может быть таким", nameof(WidthToHeightRatio));
 
                 return widthToHeightRatio;
@@ -119,7 +119,8 @@ namespace _2021_LazarishinArtur.MathLib
                 { 2, Math.Round(-0.0014 * Math.Pow(HeightToWallThicknessRatio,5) + 0.019 * Math.Pow(HeightToWallThicknessRatio,4) - 0.0876 * Math.Pow(HeightToWallThicknessRatio,3) + 0.1224 * Math.Pow(HeightToWallThicknessRatio, 2) + 0.2328 * (double)HeightToWallThicknessRatio, 3) },
                 { 3, Math.Round(0.0027 * Math.Pow(HeightToWallThicknessRatio,4) - 0.0248 * Math.Pow(HeightToWallThicknessRatio,3) + 0.0268 * Math.Pow(HeightToWallThicknessRatio,2) + 0.3 * HeightToWallThicknessRatio, 3) },
                 { 5, Math.Round(0.0054 * Math.Pow(HeightToWallThicknessRatio,3) - 0.0806 * Math.Pow(HeightToWallThicknessRatio,2) + 0.4252 * HeightToWallThicknessRatio, 3) },
-                { 10, Math.Round(0.0088 * Math.Pow(HeightToWallThicknessRatio,3) - 0.108 * Math.Pow(HeightToWallThicknessRatio,2) + 0.4819 * HeightToWallThicknessRatio, 3) }
+                { 10, Math.Round(0.0088 * Math.Pow(HeightToWallThicknessRatio,3) - 0.108 * Math.Pow(HeightToWallThicknessRatio,2) + 0.4819 * HeightToWallThicknessRatio, 3) },
+                { 11, Math.Round(0.0101 * Math.Pow(HeightToWallThicknessRatio,3) - 0.1178 * Math.Pow(HeightToWallThicknessRatio,2) + 0.5069 * HeightToWallThicknessRatio, 3) }
             };
         }
 
@@ -129,7 +130,7 @@ namespace _2021_LazarishinArtur.MathLib
         /// <param name="widthToHeightRatio">Отношение ширины к высоте окна (B/H), -</param>
         /// <param name="angularCoefficients">Словарь, где ключ - это отношение ширины к высоте окна, а значение - это угловой коэффициент</param>
         /// <returns>Угловой коэффициент (φ), -</returns>
-        private double Interpolation(double widthToHeightRatio, Dictionary<double, double> angularCoefficients)
+        private static double Interpolation(double widthToHeightRatio, Dictionary<double, double> angularCoefficients)
         {
             double x1 = 0;
             double x2 = 0;
@@ -140,6 +141,11 @@ namespace _2021_LazarishinArtur.MathLib
             {
                 if (item.Key == widthToHeightRatio)
                     return item.Value;
+
+                if (item.Key > 10)
+                {
+                    return item.Value;
+                }
 
                 if (item.Key < widthToHeightRatio)
                 {
@@ -154,7 +160,6 @@ namespace _2021_LazarishinArtur.MathLib
                     break;
                 }
             }
-
 
             if (x1 != 0 && x2 != 0 && y1 != 0 && y2 != 0)
                 return Math.Round((y1 + ((widthToHeightRatio - x1) / (x2 - x1) * (y2 - y1))), 3);

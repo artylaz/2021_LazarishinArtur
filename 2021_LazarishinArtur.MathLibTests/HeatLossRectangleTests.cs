@@ -1,10 +1,6 @@
 ﻿using _2021_LazarishinArtur.MathLib;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace _2021_LazarishinArtur.MathLibTests
 {
@@ -248,6 +244,39 @@ namespace _2021_LazarishinArtur.MathLibTests
 
             // assert
             Assert.That(ex.Message, Is.EqualTo("Значения WidthWindow, HeightWindow должны быть больше 0 (Parameter 'WidthToHeightRatio')"));
+        }
+
+        #endregion
+
+        #region Проверка AngularCoefficient
+        [Test]
+        public void HeatLossRectangle_AngularCoefficient_MoreThan10()
+        {
+            // arrange
+            heatLossRectangle.WidthWindow = 1.4;
+            heatLossRectangle.HeightWindow = 0.1;
+            heatLossRectangle.WallThickness = 0.46;
+
+            // act
+            var res = heatLossRectangle.AngularCoefficient;
+
+            // assert
+            Assert.AreEqual(0.106, res);
+        }
+
+        [Test]
+        public void HeatLossRectangle_AngularCoefficient_True()
+        {
+            // arrange
+            heatLossRectangle.WidthWindow = 1.4;
+            heatLossRectangle.HeightWindow = 0.2;
+            heatLossRectangle.WallThickness = 0.46;
+
+            // act
+            var res = heatLossRectangle.AngularCoefficient;
+
+            // assert
+            Assert.AreEqual(0.176, res);
         }
 
         #endregion
