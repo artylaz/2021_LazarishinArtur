@@ -1,0 +1,55 @@
+﻿body {
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #151719;
+}
+
+p,label {
+    color: #fff;
+}
+
+html, body {
+    height: 100%;
+}
+
+form {
+    font-family: 'Source Serif 4', sans-serif;
+    background-color: #000;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.form-signin {
+    width: 100%;
+    max-width: 320px;
+    padding: 15px;
+    margin: auto;
+    margin-bottom: 15%;
+    height: auto;
+}
+
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.form-signin .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+    margin: 2%;
+}
+
+.img-back {
+    float: left;
+}
+.img-logo {
+    margin-right:10%
+}

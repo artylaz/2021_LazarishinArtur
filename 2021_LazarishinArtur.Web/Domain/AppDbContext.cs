@@ -36,8 +36,8 @@ namespace _2021_LazarishinArtur.Web.Domain
                 Id = "885cc833-3b2c-47bb-9b90-b8439f506d2a",
                 UserName = "admin",
                 NormalizedUserName = "ADMIN",
-                Email ="art@mail.ru",
-                NormalizedEmail = "ART@MAIL.RU",
+                Email = "admin@mail.ru",
+                NormalizedEmail = "ADMIN@MAIL.RU",
                 EmailConfirmed = true,
                 PasswordHash = new PasswordHasher<User>().HashPassword(null, "admin"),
                 SecurityStamp=string.Empty

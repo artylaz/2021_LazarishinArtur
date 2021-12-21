@@ -1,0 +1,102 @@
+﻿<main>
+    <form class="form-ras anim-5">
+        <div class="container d-grid gap-3 div-ras content mt-5 mb-5 ">
+
+            <div class="row justify-content-center mt-3">
+                <div class="col-12 text-center">
+                    <p class="h2">Ведите данные для расчёта:</p>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <label for="widthWindow" class="col-sm-8 col-form-label">Ширина окна (B)</label>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <input id="widthWindow" type="text" class="form-control" aria-describedby="widthWindow">
+                        <span class="input-group-text" id="widthWindow">м</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <label for="heightWindow" class="col-sm-8 col-form-label">Высота окна (H)</label>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <input id="heightWindow" type="text" class="form-control" aria-describedby="heightWindow">
+                        <span class="input-group-text" id="heightWindow">м</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <label for="tempBake" class="col-sm-8 col-form-label">Температура в печи (tпеч)</label>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <input id="tempBake" type="text" class="form-control" aria-describedby="tempBake">
+                        <span class="input-group-text" id="tempBake">°C</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <label for="wallThickness" class="col-sm-8 col-form-label">Толщина стенки (S)</label>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <input id="wallThickness" type="text" class="form-control" aria-describedby="wallThickness">
+                        <span class="input-group-text" id="wallThickness">м</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center mb-5">
+                <label for="windowOpenTime" class="col-sm-8 col-form-label">Время открытия окна (τ)</label>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <input id="windowOpenTime" type="text" class="form-control" aria-describedby="windowOpenTime">
+                        <span class="input-group-text" id="windowOpenTime">с</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn btn-outline-light btn-lg bt_z">
+                        Расчитать
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="container d-grid gap-3 div-ras content mt-5 mb-5">
+
+            <div class="row justify-content-center mt-3">
+                <div class="col-12 text-center">
+                    <p class="h2">Результат расчёта:</p>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <label for="apertureRatio" class="col-sm-8 col-form-label">Коэффициент диафрагмирования(Φ)</label>
+                <div class="col-sm-4 ">
+                    <div class="input-group">
+                        <input id="apertureRatio" type="text" class="form-control" aria-describedby="apertureRatio">
+                        <span class="input-group-text" id="apertureRatio"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center mb-5">
+                <label for="radiationHeatLoss" class="col-sm-8 col-form-label">Потери теплоты излучения (Qл)</label>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <input id="radiationHeatLoss" type="text" class="form-control" aria-describedby="radiationHeatLoss">
+                        <span class="input-group-text" id="radiationHeatLoss">Дж</span>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+</main>

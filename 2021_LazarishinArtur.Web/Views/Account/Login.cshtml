@@ -1,0 +1,38 @@
+﻿@{
+    Layout = null;
+}
+@model _2021_LazarishinArtur.Web.Models.ViewModels.LoginViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    @await Html.PartialAsync("MetatagsPartial")
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style-auth.css" rel="stylesheet">
+</head>
+<body class="text-center">
+
+    <form class="form-signin" method="post" asp-controller="Account" asp-action="Login"
+          asp-route-returnUrl="@Model.ReturnUrl">
+
+        <a class="navbar-brand img-back" href="/Home/Index">
+            <img src="/img/back.png" width="30" height="30" loading="lazy">
+        </a>
+        <div class="container">
+            <img class="mb-4 img-logo" src="/img/logo.png" width="72" height="72">
+            <p class="h3 mb-3 font-weight-normal">Введите свои данные</p>
+            <input type="text" id="inputEmail" name="Email" class="form-control" placeholder="Email" required="" autofocus="">
+            <input type="password" id="inputPassword" name="Password" class="form-control" placeholder="Пароль" required="">
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" name="RememberMe" value="remember-me"> Запомнить меня
+                </label>
+            </div>
+
+            <input class="btn btn-outline-light mt-3 " type="submit" value="Войти" />
+        </div>
+    </form>
+
+    @await Html.PartialAsync("ScriptsPartial")
+</body>
+</html>

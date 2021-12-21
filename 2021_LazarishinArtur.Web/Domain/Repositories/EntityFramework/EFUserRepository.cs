@@ -29,7 +29,7 @@ namespace _2021_LazarishinArtur.Web.Domain.Repositories.EntityFramework
             context.SaveChanges();
         }
 
-        public User GetUserId(Guid id)
+        public User GetById(Guid id)
         {
             return context.Users.FirstOrDefault(x => x.Id == id.ToString());
         }

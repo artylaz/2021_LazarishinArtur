@@ -1,0 +1,36 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    @await Html.PartialAsync("MetatagsPartial")
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style-auth.css" rel="stylesheet">
+</head>
+<body class="text-center">
+
+    <form class="form-signin" method="post" asp-controller="Account" asp-action="Register">
+
+        <a class="img-back" href="/Home/Index">
+            <img src="/img/back.png" width="30" height="30" loading="lazy">
+        </a>
+        <div class="container">
+
+            <img class="mb-4 img-logo" src="/img/logo.png" width="72" height="72">
+
+            <p class="h3 mb-3 font-weight-normal">Введите свои данные</p>
+            <input type="text" name="Name" class="form-control" placeholder="Имя" required="" autofocus="">
+            <input type="email" name="Email" class="form-control" placeholder="Email" required="" autofocus="">
+            <input type="password" name="Password" class="form-control" placeholder="Пароль" required="">
+            <input type="password" name="PasswordConfirm" class="form-control" placeholder="Подтвердить пароль" required="">
+
+            <input class="btn btn-outline-light mt-3" type="submit" value="Зарегистрироваться" />
+        </div>
+
+
+    </form>
+
+    @await Html.PartialAsync("ScriptsPartial")
+</body>
+</html>

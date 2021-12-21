@@ -9,5 +9,6 @@ namespace _2021_LazarishinArtur.Web.Domain.Repositories.Abstract
         IQueryable<User> GetUsers();
         void SeveUser(User user);
         void DeleteUser(Guid id);
+        User GetById(Guid id);
     }
 }

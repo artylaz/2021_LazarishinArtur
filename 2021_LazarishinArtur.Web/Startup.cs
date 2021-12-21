@@ -32,13 +32,13 @@ namespace _2021_LazarishinArtur.Web
             services.AddTransient<IHeatLossSquaredDataRepository, EFHeatLossSquaredDataRepository>();
             services.AddTransient<IUserRepository, EFUserRepository>();
 
-            services.AddDbContext<AppDbContext>(x => x.UseSqlServer(Config.ConnectionStrings.GetValueOrDefault("MsSqlServerConnection")));
-            //services.AddDbContext<AppDbContext>(x => x.UseSqlite(Config.ConnectionStrings.GetValueOrDefault("SQLiteConnection")));
+            //services.AddDbContext<AppDbContext>(x => x.UseSqlServer(Config.ConnectionStrings.GetValueOrDefault("MsSqlServerConnection")));
+            services.AddDbContext<AppDbContext>(x => x.UseSqlite(Config.ConnectionStrings.GetValueOrDefault("SQLiteConnection")));
 
             services.AddIdentity<User, IdentityRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
-                options.Password.RequiredLength = 6;
+                options.Password.RequiredLength = 5;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
@@ -53,12 +53,15 @@ namespace _2021_LazarishinArtur.Web
         {
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
             app.UseRouting();
+            
 
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseStaticFiles();
+            
 
             app.UseEndpoints(endpoints =>
             {
