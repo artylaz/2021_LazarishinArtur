@@ -6,8 +6,12 @@
     background-color: #151719;
 }
 
-p,label {
+p, label {
     color: #fff;
+}
+
+span {
+    color: red;
 }
 
 html, body {
@@ -50,6 +54,8 @@ form {
 .img-back {
     float: left;
 }
+
 .img-logo {
-    margin-right:10%
+    margin-right: 10%
 }
+

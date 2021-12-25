@@ -4,18 +4,15 @@ namespace _2021_LazarishinArtur.Web.Models.ViewModels
 {
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Введите Email")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
+
         [DataType(DataType.Password)]
+        [Required(ErrorMessage = "Введите пароль")]
         [Display(Name = "Пароль")]
         public string Password { get; set; }
 
-        [Display(Name = "Запомнить?")]
-        public bool RememberMe { get; set; }
-
-        public string ReturnUrl { get; set; }
     }
 }

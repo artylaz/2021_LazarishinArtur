@@ -10,7 +10,7 @@ namespace _2021_LazarishinArtur.MathLib
         private double diameter;
 
         /// <summary>
-        /// Высота окна (H), м
+        /// Диаметр окна (D), м
         /// </summary>
         public double Diameter
         {

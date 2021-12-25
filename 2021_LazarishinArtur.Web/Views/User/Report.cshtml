@@ -1,0 +1,172 @@
+﻿@model _2021_LazarishinArtur.Web.Models.UserViewModels.CalculateViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/img/f-logo.png" type="image/x-icon">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style-report.css" rel="stylesheet">
+</head>
+<body>
+    <div>
+        <main>
+            <form class="form-ras anim-5">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                    <a id="back" class="btn btn-dark mt-2 ms-2" href="@Url.Action("Calculate",Model)"> Назад</a>
+                </div>
+
+                <div class="container d-grid gap-3 mt-4 mb-4 ">
+
+                    <h1>Отчёт</h1>
+                    <div class="row justify-content-center mt-3">
+                        <div class="col-12 text-center">
+                            <p class="h2">Исходнные данные:</p>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center" name="Rectangle">
+                        <label for="widthWindow" class="col-sm-8 col-form-label">Наименование расчёта</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <input disabled id="nameRas" asp-for="Name" type="text" class="form-control">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <label for="windowShape" class="col-sm-8 col-form-label">Форма окна</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <select disabled class="form-select" name="WindowShape" asp-for="WindowShape" id="windowShape" oninput="OnSelectionChange (this)">
+                                    <option selected value="Прямоугольное">Прямоугольное</option>
+                                    <option value="Квадратное">Квадратное</option>
+                                    <option value="Круглое">Круглое</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row justify-content-center" name="Rectangle">
+                        <label for="widthWindow" class="col-sm-8 col-form-label">Ширина окна (B)</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <input disabled id="widthWindow" type="text" autofocus oninput="HideBlock()" asp-for="WidthWindow" class="form-control" aria-describedby="widthWindow">
+                                <span class="input-group-text" id="widthWindow">м</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center" name="Rectangle">
+                        <label for="heightWindow" class="col-sm-8 col-form-label">Высота окна (H)</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <input disabled id="heightWindow" asp-for="HeightWindow" oninput="HideBlock()" type="text" class="form-control" aria-describedby="heightWindow">
+                                <span class="input-group-text" id="heightWindow">м</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="row justify-content-center display-none" name="Squared">
+                        <label for="sideLength" class="col-sm-8 col-form-label">Сторона окна (H)</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <input disabled id="sideLength" asp-for="SideLength" type="text" oninput="HideBlock()" class="form-control" aria-describedby="sideLength">
+                                <span class="input-group-text" id="sideLength">м</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center display-none" name="Circle">
+                        <label for="diameter" class="col-sm-8 col-form-label">Диаметр окна (D)</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <input disabled id="diameter" asp-for="Diameter" type="text" oninput="HideBlock()" class="form-control" aria-describedby="diameter">
+                                <span class="input-group-text" id="diameter">м</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <label for="tempBake" class="col-sm-8 col-form-label">Температура в печи (tпеч)</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <input disabled id="tempBake" asp-for="TempBake" type="text" oninput="HideBlock()" class="form-control" aria-describedby="tempBake">
+                                <span class="input-group-text" id="tempBake">°C</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <label for="wallThickness" class="col-sm-8 col-form-label">Толщина стенки (S)</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <input disabled id="wallThickness" asp-for="WallThickness" type="text" oninput="HideBlock()" class="form-control" aria-describedby="wallThickness">
+                                <span class="input-group-text" id="wallThickness">м</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center mb-5">
+                        <label for="windowOpenTime" class="col-sm-8 col-form-label">Время открытия окна (τ)</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <input disabled id="windowOpenTime" asp-for="WindowOpenTime" oninput="HideBlock()" type="text" class="form-control" aria-describedby="windowOpenTime">
+                                <span class="input-group-text" id="windowOpenTime">с</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div id="result" class="container gap-3 div-ras content mt-5 mb-5">
+
+                    <div class="row justify-content-center mt-3">
+                        <div class="col-12 text-center">
+                            <p class="h2">Результат расчёта:</p>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <label for="apertureRatio" class="col-sm-8 col-form-label">Коэффициент диафрагмирования(Φ)</label>
+                        <div class="col-sm-4 ">
+                            <div class="input-group">
+                                <input disabled id="apertureRatio" asp-for="GetApertureRatio" type="text" class="form-control" aria-describedby="apertureRatio">
+                                <span class="input-group-text" id="apertureRatio"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center mb-1">
+                        <label for="radiationHeatLoss" class="col-sm-8 col-form-label">Потери теплоты излучения (Qл)</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <input disabled id="radiationHeatLoss" asp-for="GetRadiationHeatLoss" type="text" class="form-control" aria-describedby="radiationHeatLoss">
+                                <span class="input-group-text" id="radiationHeatLoss">Дж</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+        </main>
+
+    </div>
+
+    <script>
+        document.getElementById("back").style.display = "none";
+        window.print();
+        setTimeout(() => {document.getElementById("back").style.display = "block"}, 2000);
+    </script>
+</body>
+</html>

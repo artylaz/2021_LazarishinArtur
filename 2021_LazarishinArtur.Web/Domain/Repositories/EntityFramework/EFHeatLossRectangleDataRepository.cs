@@ -24,20 +24,20 @@ namespace _2021_LazarishinArtur.Web.Domain.Repositories.EntityFramework
             context.SaveChanges();
         }
 
-        public void DeleteHeatLossCircleData(Guid id)
+        public void DeleteHeatLossCircleData(int id)
         {
             context.HeatLossRectangleDatas.Remove(new HeatLossRectangleData { Id = id });
             context.SaveChanges();
         }
 
-        public HeatLossRectangleData GetHeatLossCircleDataById(Guid id)
+        public HeatLossRectangleData GetHeatLossCircleDataById(int id)
         {
             return context.HeatLossRectangleDatas.FirstOrDefault(x => x.Id == id);
         }
 
-        public IQueryable<HeatLossRectangleData> GetUserHeatLossCircleDatas(Guid userId)
+        public IQueryable<HeatLossRectangleData> GetUserHeatLossCircleDatas(int userId)
         {
-            return context.HeatLossRectangleDatas.Where(x => x.UserId == userId.ToString());
+            return context.HeatLossRectangleDatas.Where(x => x.UserId == userId);
         }
     }
 }

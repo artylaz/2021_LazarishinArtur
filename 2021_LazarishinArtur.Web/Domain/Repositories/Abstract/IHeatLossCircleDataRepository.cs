@@ -6,9 +6,9 @@ namespace _2021_LazarishinArtur.Web.Domain.Repositories.Abstract
 {
     public interface IHeatLossCircleDataRepository
     {
-        IQueryable<HeatLossCircleData> GetUserHeatLossCircleDatas(Guid userId);
-        HeatLossCircleData GetHeatLossCircleDataById(Guid id);
+        IQueryable<HeatLossCircleData> GetUserHeatLossCircleDatas(int userId);
+        HeatLossCircleData GetHeatLossCircleDataById(int id);
         void SeveHeatLossCircleData(HeatLossCircleData entity);
-        void DeleteHeatLossCircleData(Guid id);
+        void DeleteHeatLossCircleData(int id);
     }
 }

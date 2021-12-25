@@ -10,7 +10,7 @@ namespace _2021_LazarishinArtur.MathLib
         private double sideLength;
 
         /// <summary>
-        /// Высота окна (H), м
+        /// Сторона окна (H), м
         /// </summary>
         public double SideLength
         {

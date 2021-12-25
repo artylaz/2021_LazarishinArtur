@@ -1,20 +1,25 @@
-﻿using _2021_LazarishinArtur.Web.Domain.Entities;
+﻿using _2021_LazarishinArtur.Web.Domain;
+using _2021_LazarishinArtur.Web.Domain.Entities;
+using _2021_LazarishinArtur.Web.Domain.Repositories.EntityFramework;
 using _2021_LazarishinArtur.Web.Models.ViewModels;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace _2021_LazarishinArtur.Web.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<User> userManager;
-        private readonly SignInManager<User> signInManager;
+        private readonly AppDbContext context;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(  AppDbContext context)
         {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
+            this.context = context;
         }
         [HttpGet]
         public IActionResult Register()
@@ -26,34 +31,32 @@ namespace _2021_LazarishinArtur.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = new User { Email = model.Email, UserName = model.Name};
-
-                var result = await userManager.CreateAsync(user, model.Password);
-                
-
-
-                if (result.Succeeded)
+                User user = await context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+                if (user == null)
                 {
-                    await userManager.AddToRoleAsync(user, "user");
+                    // добавляем пользователя в бд
+                    user = new User { Email = model.Email, Name = model.Name, Password = model.Password };
+                    Role userRole = await context.Roles.FirstOrDefaultAsync(r => r.Name == "user");
+                    if (userRole != null)
+                        user.Role = userRole;
 
-                    await signInManager.SignInAsync(user, false);
+                    context.Users.Add(user);
+                    await context.SaveChangesAsync();
+
+                    await Authenticate(user); 
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
-                }
+                    ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
             return View(model);
 
         }
         [HttpGet]
-        public IActionResult Login(string returnUrl = null)
+        public IActionResult Login()
         {
-            return View(new LoginViewModel { ReturnUrl = returnUrl });
+            return View();
         }
 
         [HttpPost]
@@ -62,34 +65,42 @@ namespace _2021_LazarishinArtur.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result =
-                    await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
-                if (result.Succeeded)
+                User user = await context.Users
+                    .Include(u => u.Role)
+                    .FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
+                if (user != null)
                 {
-                    // проверяем, принадлежит ли URL приложению
-                    if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
-                    {
-                        return Redirect(model.ReturnUrl);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Calculate", "User");
-                    }
+                    await Authenticate(user);
+
+                    return RedirectToAction("Index", "Home");
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
-                }
+                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
             return View(model);
+        }
+
+        private async Task Authenticate(User user)
+        {
+            
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Id.ToString()),
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name),
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Name),
+            };
+            
+            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
+                ClaimsIdentity.DefaultRoleClaimType);
+            
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-            // удаляем аутентификационные куки
-            await signInManager.SignOutAsync();
+            await HttpContext.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
     }

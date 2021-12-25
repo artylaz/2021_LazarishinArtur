@@ -7,7 +7,7 @@ namespace _2021_LazarishinArtur.Web.Domain.Entities.Base
     public class CalculationDataBase
     {
         [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(50, MinimumLength = 1)]
@@ -25,7 +25,13 @@ namespace _2021_LazarishinArtur.Web.Domain.Entities.Base
         [Required]
         public double WindowOpenTime { get; set; }
 
-        public string UserId { get; set; }
+        [Required]
+        public double ApertureRatio { get; set; }
+        [Required]
+        public double RadiationHeatLoss { get; set; }
+
+        [Required]
+        public int? UserId { get; set; }
 
         [ForeignKey("UserId")]
         public User User { get; set; }

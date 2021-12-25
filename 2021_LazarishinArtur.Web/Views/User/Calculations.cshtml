@@ -1,5 +1,152 @@
-﻿<main>
-    <div>
+﻿@using _2021_LazarishinArtur.Web.Models.UserViewModels
+@model List<CalculateViewModel>
 
+<div class="container d-grid gap-3 div-rases content mt-5 mb-5 ">
+
+    <div id="accordion">
+        <div class="card">
+            <div class="card-header">
+                <a data-bs-toggle="collapse" href="#collapseOne">
+                    Расчёты с прямоугольным окном
+                </a>
+            </div>
+            <div id="collapseOne" class="collapse show" data-bs-parent="#accordion">
+                <div class="card-body">
+                    @if (Model?.Where(x => x.WindowShape == "Прямоугольное").ToList().Count > 0)
+                    {
+                        <table class="table table-dark table-hover">
+                            <tr>
+                                <th>Наименование расчёта</th>
+                                <th>Дата</th>
+                                <th></th>
+                            </tr>
+
+                            @foreach (var item in Model?.Where(x => x.WindowShape == "Прямоугольное").ToList())
+                            {
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-outline-light btn-calc" href="@Url.Action("Calculate","User",item)">@item.Name</a>
+                                    </td>
+                                    <td>
+                                        <p class="h5">@item.DateAdded.ToString("dd.MM.yyyy hh:mm")</p>
+                                    </td>
+                                    <td>
+                                        <form method="post" asp-controller="User" asp-action="Delete">
+
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            <input type="hidden" name="windowShape" value="@item.WindowShape" />
+
+                                            <input class="btn btn-outline-light btn-calc" type="submit" value="Удалить" />
+                                        </form>
+
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                    }
+                    else
+                    {
+                        <p class="h4"> Расчётов нет</p>
+
+                    }
+
+                </div>
+            </div>
+        </div>
+        <div class="card ">
+            <div class="card-header">
+                <a class="collapsed" data-bs-toggle="collapse" href="#collapseTwo">
+                    Расчёты с квадратным окном
+                </a>
+            </div>
+            <div id="collapseTwo" class="collapse" data-bs-parent="#accordion">
+                <div class="card-body">
+                    @if (Model.Where(x => x.WindowShape == "Квадратное").ToList().Count > 0)
+                    {
+                        <table class="table table-dark table-hover">
+                            <tr>
+                                <th>Наименование расчёта</th>
+                                <th>Дата</th>
+                                <th></th>
+                            </tr>
+
+                            @foreach (var item in Model.Where(x => x.WindowShape == "Квадратное").ToList())
+                            {
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-outline-light btn-calc" href="@Url.Action("Calculate","User",item)">@item.Name</a>
+                                    </td>
+                                    <td>
+                                        <p class="h5">@item.DateAdded.ToString("dd.MM.yyyy hh:mm")</p>
+                                    </td>
+                                    <td>
+                                        <form method="post" asp-controller="User" asp-action="Delete">
+
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            <input type="hidden" name="windowShape" value="@item.WindowShape" />
+
+                                            <input class="btn btn-outline-light btn-calc" type="submit" value="Удалить" />
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                    }
+                    else
+                    {
+                        <p class="h4"> Расчётов нет</p>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="card ">
+            <div class="card-header">
+                <a class="collapsed" data-bs-toggle="collapse" href="#collapseThree">
+                    Расчёты с круглым окном
+                </a>
+            </div>
+            <div id="collapseThree" class="collapse" data-bs-parent="#accordion">
+                <div class="card-body">
+                    @if (Model.Where(x => x.WindowShape == "Круглое").ToList().Count > 0)
+                    {
+                        <table class="table table-dark table-hover">
+                            <tr>
+                                <th>Наименование расчёта</th>
+                                <th>Дата</th>
+                                <th></th>
+                            </tr>
+
+                            @foreach (var item in Model.Where(x => x.WindowShape == "Круглое").ToList())
+                            {
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-outline-light btn-calc" href="@Url.Action("Calculate","User",item)">@item.Name</a>
+                                    </td>
+                                    <td>
+                                        <p class="h5">@item.DateAdded.ToString("dd.MM.yyyy hh:mm")</p>
+                                    </td>
+                                    <td>
+                                        <form method="post" asp-controller="User" asp-action="Delete">
+
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            <input type="hidden" name="windowShape" value="@item.WindowShape" />
+
+                                            <input class="btn btn-outline-light btn-calc" type="submit" value="Удалить" />
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                    }
+                    else
+                    {
+                        <p class="h4"> Расчётов нет</p>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
-</main>
+</div>

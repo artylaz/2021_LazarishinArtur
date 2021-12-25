@@ -2,7 +2,9 @@ using _2021_LazarishinArtur.Web.Domain;
 using _2021_LazarishinArtur.Web.Domain.Entities;
 using _2021_LazarishinArtur.Web.Domain.Repositories.Abstract;
 using _2021_LazarishinArtur.Web.Domain.Repositories.EntityFramework;
+using _2021_LazarishinArtur.Web.Hubs;
 using _2021_LazarishinArtur.Web.Service;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -30,23 +32,33 @@ namespace _2021_LazarishinArtur.Web
             services.AddTransient<IHeatLossCircleDataRepository, EFHeatLossCircleDataRepository>();
             services.AddTransient<IHeatLossRectangleDataRepository, EFHeatLossRectangleDataRepository>();
             services.AddTransient<IHeatLossSquaredDataRepository, EFHeatLossSquaredDataRepository>();
-            services.AddTransient<IUserRepository, EFUserRepository>();
 
             //services.AddDbContext<AppDbContext>(x => x.UseSqlServer(Config.ConnectionStrings.GetValueOrDefault("MsSqlServerConnection")));
             services.AddDbContext<AppDbContext>(x => x.UseSqlite(Config.ConnectionStrings.GetValueOrDefault("SQLiteConnection")));
 
-            services.AddIdentity<User, IdentityRole>(options =>
-            {
-                options.User.RequireUniqueEmail = true;
-                options.Password.RequiredLength = 5;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireDigit = false;
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = new PathString("/Account/Login");
+                    options.AccessDeniedPath = new PathString("/Account/Login");
+                });
 
-            }).AddEntityFrameworkStores<AppDbContext>();
+            //services.AddIdentity<User, IdentityRole>(options =>
+            //{
+            //    options.User.RequireUniqueEmail = true;
+            //    options.Password.RequiredLength = 5;
+            //    options.Password.RequireNonAlphanumeric = false;
+            //    options.Password.RequireLowercase = false;
+            //    options.Password.RequireUppercase = false;
+            //    options.Password.RequireDigit = false;
+
+            //}).AddEntityFrameworkStores<AppDbContext>();
+
+
 
             services.AddControllersWithViews();
+
+            services.AddSignalR();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -66,6 +78,7 @@ namespace _2021_LazarishinArtur.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<UserHub>("/Hub");
             });
         }
     }

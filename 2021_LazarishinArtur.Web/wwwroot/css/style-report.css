@@ -1,0 +1,56 @@
+﻿
+
+.p1 {
+    text-align: center;
+}
+
+.p2 {
+    text-align: center;
+    margin-top: 5%;
+}
+
+
+.bt_z {
+    margin-top: 4%;
+    margin-bottom: 5%;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.bt_v {
+    margin-right: 2%;
+}
+
+.button-z-v {
+    display: inline-block;
+}
+
+.div-auth {
+    align-items: center;
+    text-align: center;
+}
+
+    .div-auth p {
+        margin-right: 3%;
+    }
+
+    .div-auth img {
+        margin-right: 3%;
+    }
+
+.form-ras {
+    border: none;
+}
+
+
+
+.div-rases div {
+    text-align: center;
+}
+
+.div-rases a {
+    display: inline-block;
+    text-decoration: none;
+    padding: 0.375rem 0.75rem;
+}
