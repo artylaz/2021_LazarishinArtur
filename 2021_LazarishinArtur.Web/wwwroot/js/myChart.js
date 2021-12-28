@@ -15,7 +15,7 @@ const myChart = new Chart(ctx, {
                 display: true,
                 title: {
                     display: true,
-                    text: 'Температура в печи (tпеч), °С'
+                    text: 'Время открытия окна (τ), с'
                 }
             },
             y: {

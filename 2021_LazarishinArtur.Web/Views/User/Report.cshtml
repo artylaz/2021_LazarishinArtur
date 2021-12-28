@@ -128,7 +128,7 @@
 
                 </div>
 
-                <div id="result" class="container gap-3 div-ras content mt-5 mb-5">
+                <div class="container gap-3 div-ras content mt-5 mb-5">
 
                     <div class="row justify-content-center mt-3">
                         <div class="col-12 text-center">
@@ -162,11 +162,11 @@
         </main>
 
     </div>
-
+    @await Html.PartialAsync("ScriptsPartial")
     <script>
         document.getElementById("back").style.display = "none";
         window.print();
-        setTimeout(() => {document.getElementById("back").style.display = "block"}, 2000);
+        setTimeout(() => { document.getElementById("back").style.display = "block" }, 2000);
     </script>
 </body>
 </html>

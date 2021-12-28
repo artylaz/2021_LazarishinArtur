@@ -64,7 +64,43 @@ function Edit(e) {
 
     };
 
-    /*if (windowShape < 0 || windowShape >= 5)*/
+    if (windowShape == "Прямоугольное") {
+        if (widthWindow < 0 || widthWindow >= 5 || widthWindow == "") {
+            document.getElementById("widthWindowVal").style.display = "block";
+            return;
+        }
+        else if (heightWindow < 0 || heightWindow >= 5 || heightWindow == "") {
+            document.getElementById("heightWindowVal").style.display = "block";
+            return;
+        }
+    }
+    else if (windowShape == "Круглое") {
+        if (diameter < 0 || diameter >= 5 || diameter == "") {
+            document.getElementById("diameterVal").style.display = "block";
+            return;
+        }
+    }
+    else if (windowShape == "Квадратное") {
+        if (sideLength < 0 || sideLength >= 5 || sideLength == "") {
+            document.getElementById("sideLengthVal").style.display = "block";
+            return;
+        }
+    }
+
+
+
+    if (tempBake < 0 || tempBake >= 4500 || tempBake == "") {
+        document.getElementById("tempBakeVal").style.display = "block";
+        return;
+    }
+    else if (wallThickness < 0 || wallThickness >= 5 || wallThickness == "") {
+        document.getElementById("wallThicknessVal").style.display = "block";
+        return;
+    }
+    else if (windowOpenTime < 0 || windowOpenTime == "") {
+        document.getElementById("windowOpenTimeVal").style.display = "block";
+        return;
+    }
 
     hubConnection.invoke("Send", {
         "WindowShape": windowShape,
@@ -194,8 +230,37 @@ hubConnection.on("SaveCalculate", function (name) {
 });
 
 
-function HideBlock() {
+function HideBlock(el) {
     document.getElementById("result").style.display = "none";
+
+    if (el.id == "widthWindow") {
+        document.getElementById("widthWindowVal").style.display = "none";
+
+    }
+    else if (el.id == "heightWindow") {
+        document.getElementById("heightWindowVal").style.display = "none";
+
+    }
+    else if (el.id == "diameter") {
+        document.getElementById("diameterVal").style.display = "none";
+
+    }
+    else if (el.id == "sideLength") {
+        document.getElementById("sideLengthVal").style.display = "none";
+
+    }
+    else if (el.id == "tempBake") {
+        document.getElementById("tempBakeVal").style.display = "none";
+
+    }
+    else if (el.id == "wallThickness") {
+        document.getElementById("wallThicknessVal").style.display = "none";
+
+    }
+    else if (el.id == "windowOpenTime") {
+        document.getElementById("windowOpenTimeVal").style.display = "none";
+
+    }
 }
 
 function OpenResult() {

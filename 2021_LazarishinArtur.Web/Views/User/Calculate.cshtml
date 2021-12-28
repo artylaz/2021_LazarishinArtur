@@ -30,20 +30,22 @@
                 <label for="widthWindow" class="col-sm-8 col-form-label">Ширина окна (B)</label>
                 <div class="col-sm-4">
                     <div class="input-group">
-                        <input id="widthWindow" type="text" autofocus oninput="HideBlock()" asp-for="WidthWindow" class="form-control" aria-describedby="widthWindow">
+                        <input id="widthWindow" type="text" autofocus oninput="HideBlock(this)" asp-for="WidthWindow" class="form-control" aria-describedby="widthWindow">
                         <span class="input-group-text" id="widthWindow">м</span>
                     </div>
                 </div>
+                <h5 id="widthWindowVal" class="pVal">Значение введено некорректно</h5>
             </div>
 
             <div class="row justify-content-center" name="Rectangle">
                 <label for="heightWindow" class="col-sm-8 col-form-label">Высота окна (H)</label>
                 <div class="col-sm-4">
                     <div class="input-group">
-                        <input id="heightWindow" asp-for="HeightWindow" oninput="HideBlock()" type="text" class="form-control" aria-describedby="heightWindow">
+                        <input id="heightWindow" asp-for="HeightWindow" oninput="HideBlock(this)" type="text" class="form-control" aria-describedby="heightWindow">
                         <span class="input-group-text" id="heightWindow">м</span>
                     </div>
                 </div>
+                <h5 id="heightWindowVal" class="pVal">Значение введено некорректно</h5>
             </div>
 
 
@@ -53,50 +55,55 @@
                 <label for="sideLength" class="col-sm-8 col-form-label">Сторона окна (H)</label>
                 <div class="col-sm-4">
                     <div class="input-group">
-                        <input id="sideLength" asp-for="SideLength" type="text" oninput="HideBlock()" class="form-control" aria-describedby="sideLength">
+                        <input id="sideLength" asp-for="SideLength" type="text" oninput="HideBlock(this)" class="form-control" aria-describedby="sideLength">
                         <span class="input-group-text" id="sideLength">м</span>
                     </div>
                 </div>
+                <h5 id="sideLengthVal" class="pVal">Значение введено некорректно</h5>
             </div>
 
             <div class="row justify-content-center display-none" name="Circle">
                 <label for="diameter" class="col-sm-8 col-form-label">Диаметр окна (D)</label>
                 <div class="col-sm-4">
                     <div class="input-group">
-                        <input id="diameter" asp-for="Diameter" type="text" oninput="HideBlock()" class="form-control" aria-describedby="diameter">
+                        <input id="diameter" asp-for="Diameter" type="text" oninput="HideBlock(this)" class="form-control" aria-describedby="diameter">
                         <span class="input-group-text" id="diameter">м</span>
                     </div>
                 </div>
+                <h5 id="diameterVal" class="pVal">Значение введено некорректно</h5>
             </div>
 
             <div class="row justify-content-center">
                 <label for="tempBake" class="col-sm-8 col-form-label">Температура в печи (tпеч)</label>
                 <div class="col-sm-4">
                     <div class="input-group">
-                        <input id="tempBake" asp-for="TempBake" type="text" oninput="HideBlock()" class="form-control" aria-describedby="tempBake">
+                        <input id="tempBake" asp-for="TempBake" type="text" oninput="HideBlock(this)" class="form-control" aria-describedby="tempBake">
                         <span class="input-group-text" id="tempBake">°C</span>
                     </div>
                 </div>
+                <h5 id="tempBakeVal" class="pVal">Значение введено некорректно</h5>
             </div>
 
             <div class="row justify-content-center">
                 <label for="wallThickness" class="col-sm-8 col-form-label">Толщина стенки (S)</label>
                 <div class="col-sm-4">
                     <div class="input-group">
-                        <input id="wallThickness" asp-for="WallThickness" type="text" oninput="HideBlock()" class="form-control" aria-describedby="wallThickness">
+                        <input id="wallThickness" asp-for="WallThickness" type="text" oninput="HideBlock(this)" class="form-control" aria-describedby="wallThickness">
                         <span class="input-group-text" id="wallThickness">м</span>
                     </div>
                 </div>
+                <h5 id="wallThicknessVal" class="pVal">Значение введено некорректно</h5>
             </div>
 
             <div class="row justify-content-center mb-5">
                 <label for="windowOpenTime" class="col-sm-8 col-form-label">Время открытия окна (τ)</label>
                 <div class="col-sm-4">
                     <div class="input-group">
-                        <input id="windowOpenTime" asp-for="WindowOpenTime" oninput="HideBlock()" type="text" class="form-control" aria-describedby="windowOpenTime">
+                        <input id="windowOpenTime" asp-for="WindowOpenTime" oninput="HideBlock(this)" type="text" class="form-control" aria-describedby="windowOpenTime">
                         <span class="input-group-text" id="windowOpenTime">с</span>
                     </div>
                 </div>
+                <h5 id="windowOpenTimeVal" class="pVal">Значение введено некорректно</h5>
             </div>
 
             <div class="row">
@@ -147,10 +154,10 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <button type="button" onclick="Save()" class="btn btn-outline-light btn-lg bt_z">
+                    <button type="button" onclick="Save()" class="btn btn-outline-light btn-lg bt_s">
                         Сохранить
                     </button>
-                    <a href="@Url.Action("Report",Model)" class="btn btn-outline-light btn-lg bt_z">
+                    <a href="@Url.Action("Report",Model)" class="btn btn-outline-light btn-lg bt_s">
                         Отчёт
                     </a>
                 </div>

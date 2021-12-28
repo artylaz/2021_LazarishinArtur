@@ -42,6 +42,14 @@ body {
     transform: translate(-50%, 0);
 }
 
+.bt_s {
+    margin-top: 4%;
+    margin-bottom: 5%;
+    position: relative;
+    left: 42%;
+    transform: translate(-50%, 0);
+}
+
 .bt_v {
     margin-right: 2%;
 }
@@ -152,4 +160,5 @@ body {
     color: #f8f9fa;
     border:none;
 }
+
 
