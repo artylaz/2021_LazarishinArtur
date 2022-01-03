@@ -48,7 +48,7 @@ namespace _2021_LazarishinArtur.Web.Controllers
         }
 
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult Report(CalculateViewModel viewModel)
         {
             return View(viewModel);

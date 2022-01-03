@@ -35,7 +35,7 @@ namespace _2021_LazarishinArtur.Web.Models.UserViewModels
         public double SideLength { get; set; }
 
         [Required(ErrorMessage = "Не указано значение")]
-        [Range(0.001, 5, ErrorMessage = "Значение должно быть больше 0 и меньше 4500 градусов")]
+        [Range(0.001, 4500, ErrorMessage = "Значение должно быть больше 0 и меньше 4500 градусов")]
         public double TempBake { get; set; }
 
         [Required(ErrorMessage = "Не указано значение")]

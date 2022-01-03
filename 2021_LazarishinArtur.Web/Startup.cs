@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -64,6 +65,12 @@ namespace _2021_LazarishinArtur.Web
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+
+            var enCulture = new CultureInfo("en-US");
+            CultureInfo.CurrentCulture = enCulture;
+            CultureInfo.CurrentUICulture = enCulture;
+            CultureInfo.DefaultThreadCurrentCulture = enCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = enCulture;
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

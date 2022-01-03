@@ -1,7 +1,7 @@
 ﻿@model _2021_LazarishinArtur.Web.Models.UserViewModels.CalculateViewModel
 
 <main>
-    <form class="form-ras anim-5">
+    <form class="form-ras anim-5" asp-action="Report" asp-controller="User">
         <div class="container d-grid gap-3 div-ras content mt-5 mb-5 ">
 
             <div class="row justify-content-center mt-3">
@@ -157,9 +157,7 @@
                     <button type="button" onclick="Save()" class="btn btn-outline-light btn-lg bt_s">
                         Сохранить
                     </button>
-                    <a href="@Url.Action("Report",Model)" class="btn btn-outline-light btn-lg bt_s">
-                        Отчёт
-                    </a>
+                    <input type="submit" class="btn btn-outline-light btn-lg bt_s" value="Отчёт"/>
                 </div>
             </div>
         </div>
